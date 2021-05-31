@@ -1,69 +1,78 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include "class_Menu.h"
+#define DIV cout << menu.div << endl;
 
-template <typename T>
-class Vector
-{
-private:
-  T *vectorPtr;
+using namespace std;
 
-public:
-  T xCoord;
-  T yCoord;
-  T zCoord;
-  Vector(){
-    xCoord = 0;
-    yCoord = 0;
-    zCoord = 0;
-  }
+int Menu::count = 0;
+
+int main(/*int argc, char* argv[]*/){
+
+  #if 0
+  if(argc<2){return 1;}
+  #endif
+
+  fstream out(/*argv[1]*/"inputFile.txt", ios::in | ios::out);
+    if(!out) {
+        cout << "Файл не открылся";
+        return 0;}
+
+  Menu menu;
+
+  cout << menu.menu << endl;
+  cout << menu.div <<endl;
+
+  int i = 1;
+  int id;
+  int arr_size = 1;
+  Tour *data = new Tour[arr_size];
+  *data = menu.getFile(out, data, &arr_size);
+  cout << data;
   
-  Vector(T x, T y, T z){
-    xCoord = x;
-    yCoord = y;
-    zCoord = z;
+
+  while(i == 1){
+    cin >> id;
+    if(id == 1){
+      menu.addition(out, data, &arr_size);
+      DIV
+    }
+    else if(id == 2){
+      menu.show_all_entries(out, data);
+      DIV
+    }
+    else if(id == 3){
+      menu.find_tour_by_name(out, data);
+      DIV
+    }
+    else if(id == 4){
+      menu.find_tour_by_place(out, data);
+      DIV
+    }
+    else if(id == 5){
+      menu.find_tour_by_date(out, data);
+      DIV
+    }
+    else if(id == 6){
+      menu.find_tour_by_price(out, data);
+      DIV
+    }
+    else if(id == 7){
+      menu.removal(out, data, &arr_size);
+    }
+    else if(id == 8){
+      break;
+    }
+    else if(id == 9){
+      cout << menu.menu << endl;
+      DIV
+    }
+    else{
+      cout << "Неверный id команды\n" << endl;
+      DIV
+    }
   }
-};
-
-template <typename T>
-Vector<T>& operator + (Vector<T> v1, Vector<T> v2)
-{
-  v1.xCoord += v2.xCoord;
-  v1.yCoord += v2.yCoord; 
-  v1.zCoord += v2.zCoord; 
-
-  return(v1);
-}
-
-template <typename T>
-Vector<T>& operator - (Vector<T> v1, Vector<T> v2)
-{
-  v1.xCoord -= v2.xCoord;
-  v1.yCoord -= v2.yCoord; 
-  v1.zCoord -= v2.zCoord; 
-  
-  return(v1);
-}
-
-template <typename T>
-T operator * (Vector<T> v1, Vector<T> v2)
-{
-  return(v1.xCoord*v2.xCoord + v1.yCoord*v2.yCoord + v1.zCoord*v2.zCoord);
-}
-
-template <typename T>
-void output(Vector<T> v){
-    std::cout << "{" << v.xCoord << ", " << v.yCoord << ", " << v.zCoord << "}" << std::endl;
-  }
-
-int main(){
-
-  Vector <int> v1(1, 2, 3);
-  Vector <int> v2(2, 3, 4);
-
-  Vector <int> vSum = v1+v2;
-  Vector <int> vDiff = v1-v2;
-  int vMult = v1*v2;
-
-  output(vSum);
-  output(vDiff);
-  std::cout << vMult << std::endl;
+  delete[] data;
+  out.close();
 }
