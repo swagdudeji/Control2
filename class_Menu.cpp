@@ -2,7 +2,7 @@
 
 void Menu::addition(fstream &out, Tour *data, int *arr_size){
       Tour *tmpData = new Tour[*arr_size+1];
-      for(int i=0; i<*arr_size; i++){
+      for(int i=0; i<*arr_size-1; i++){
         tmpData[i] = data[i];
         }
       delete[] data;
@@ -30,6 +30,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
       for(int c =0; c<count; c++){
         if(name == data[c].name){
           cout << data[c];
+          label = true;
         }
       }
       if(label == false){
@@ -126,7 +127,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
     f.seekg(0, ios::beg);
     Tour *tmpData = new Tour[count];
     int i=0;
-    while(!f.eof() && arr_size<count){
+    while(!f.eof() && arr_size-1<count){
       f >> tmpData[i];
       i++;
       arr_size++;
