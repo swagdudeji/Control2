@@ -28,10 +28,8 @@ int main(/*int argc, char* argv[]*/){
   int id;
   int arr_size = 1;
   Tour *data = new Tour[arr_size];
-  *data = menu.getFile(out, data, &arr_size);
-  cout << data;
+  data = menu.getFile(out, data, arr_size);
   
-
   while(i == 1){
     cin >> id;
     if(id == 1){
@@ -60,6 +58,7 @@ int main(/*int argc, char* argv[]*/){
     }
     else if(id == 7){
       menu.removal(out, data, &arr_size);
+      DIV
     }
     else if(id == 8){
       break;
@@ -73,6 +72,5 @@ int main(/*int argc, char* argv[]*/){
       DIV
     }
   }
-  delete[] data;
   out.close();
 }
