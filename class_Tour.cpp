@@ -5,7 +5,7 @@ std::ostream& operator<< (std::ostream &out, const Tour tour){
   return out;
 }
 
-std::istream& operator>> (std::istream &in, Tour tour){
+std::istream& operator>> (std::istream &in, Tour &tour){
   in >> tour.name;
   in >> tour.place;
   in >> tour.date;

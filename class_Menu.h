@@ -26,6 +26,6 @@ class Menu{
     void find_tour_by_place(std::fstream &out, Tour *data);
     void find_tour_by_date(std::fstream &out, Tour *data);
     void find_tour_by_price(std::fstream &out, Tour *data);
-    void removal(std::fstream &out, Tour *data, int *arr_size);
+    void removal(std::fstream &out, std::string link, Tour *data, int *arr_size);
     Tour* getFile(fstream& f, Tour* data, int &arr_size);
 };

@@ -1,22 +1,30 @@
 #include "class_Menu.h"
+#include <stdio.h>
 
 void Menu::addition(fstream &out, Tour *data, int *arr_size){
       Tour *tmpData = new Tour[*arr_size+1];
+      cout << "CHECK: " << data[0];
       for(int i=0; i<*arr_size-1; i++){
         tmpData[i] = data[i];
+        cout << "CHECK: " << tmpData[i];
         }
       delete[] data;
       cout << "Введите Название, Место, Дату и Стоимость тура" << endl;
-      cin >> tmpData[count];
+      cin >> tmpData[count-1];
       data = tmpData;
       tmpData = nullptr;
+      for(int i=0; i<count; i++){
+        cout << "CHECK: " << data[i];
+        }
       out.seekg(0, ios::end);
-      out << data[count];
-      count = count + 1;
+      out << endl;
+      out << data[count-1];
+      count++;
       cout << "Тур успешно добавлен" << endl;
     };
 
     void Menu::show_all_entries(fstream &out, Tour *data){
+      cout << data[0];
       for(int c =0; c<count-1; c++){
         cout << data[c];
       }
@@ -91,29 +99,37 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
         }
     }
 
-    void Menu::removal(fstream &out, Tour *data, int *arr_size){
+    void Menu::removal(fstream &out, string link, Tour *data, int *arr_size){
       int num;
       char tmp;
       cout << "Введите номер удаляемого тура" << endl;
       cin >> num;
       count--;
+      int stopCounter;
       Tour *tmpData = new Tour[*arr_size-1];
         for(int i=0; i<*arr_size-1; i++){
           if(num != i+1){
             tmpData[i] = data[i];
             }
           else{
-            continue;
+            stopCounter = i;
+            break;
             }
+          }
+        for(int i=stopCounter; i<*arr_size-1; i++){
+          tmpData[i] = data[i+1];
         }
       delete[] data;
       data = tmpData;
       tmpData = nullptr;
       arr_size--;
-      (out).seekg(0, ios::beg);
+      out.close();
+      std::ofstream ofs;
+      ofs.open(link, std::ofstream::out | std::ofstream::trunc);
       for(int c=0; c<count; c++){
         out << data[c];
       }
+      ofs << endl;
       cout << "Тур успешно удален" << endl;
     }
 
@@ -123,7 +139,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
       getline(f, tmp1);
       count++;
       }
-    count = count;
+    count++;
     f.seekg(0, ios::beg);
     Tour *tmpData = new Tour[count];
     int i=0;

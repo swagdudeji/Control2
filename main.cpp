@@ -57,7 +57,7 @@ int main(/*int argc, char* argv[]*/){
       DIV
     }
     else if(id == 7){
-      menu.removal(out, data, &arr_size);
+      menu.removal(out, "inputFile.txt", data, &arr_size);
       DIV
     }
     else if(id == 8){
