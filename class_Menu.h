@@ -20,7 +20,7 @@ class Menu{
 
     static int count;
 
-    void addition(std::fstream &out, Tour *data, int *arr_size);
+    Tour addition(std::fstream &out, Tour *data, int *arr_size);
     void show_all_entries(std::fstream &out, Tour *data);
     void find_tour_by_name(std::fstream &out, Tour *data);
     void find_tour_by_place(std::fstream &out, Tour *data);

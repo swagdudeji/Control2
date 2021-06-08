@@ -1,7 +1,7 @@
 #include "class_Menu.h"
 #include <stdio.h>
 
-void Menu::addition(fstream &out, Tour *data, int *arr_size){
+Tour Menu::addition(fstream &out, Tour *data, int *arr_size){
       Tour *tmpData = new Tour[*arr_size+1];
       cout << "CHECK: " << data[0];
       for(int i=0; i<*arr_size-1; i++){
@@ -10,22 +10,22 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
         }
       delete[] data;
       cout << "Введите Название, Место, Дату и Стоимость тура" << endl;
-      cin >> tmpData[count-1];
+      cin >> tmpData[count];
       data = tmpData;
       tmpData = nullptr;
-      for(int i=0; i<count; i++){
+      for(int i=0; i<=count; i++){
         cout << "CHECK: " << data[i];
         }
+      out.clear();
       out.seekg(0, ios::end);
-      out << endl;
-      out << data[count-1];
+      out << data[count];
       count++;
       cout << "Тур успешно добавлен" << endl;
+      return *data;
     };
 
     void Menu::show_all_entries(fstream &out, Tour *data){
-      cout << data[0];
-      for(int c =0; c<count-1; c++){
+      for(int c =0; c<count; c++){
         cout << data[c];
       }
     }
@@ -36,7 +36,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
       cout << "Введите название тура" << endl;
       cin >> name;
       for(int c =0; c<count; c++){
-        if(name == data[c].name){
+        if(name == data[c].getName()){
           cout << data[c];
           label = true;
         }
@@ -52,7 +52,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
       cout << "Введите место тура" << endl;
       cin >> place;
       for(int c =0; c<count; c++){
-        if(place == data[c].place){
+        if(place == data[c].getPlace()){
           cout << data[c];
           label = true;
         }
@@ -72,7 +72,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
       }
       else{
         for(int c =0; c<count; c++){
-          if(date == data[c].date){
+          if(date == data[c].getDate()){
             cout << data[c];
             label = true;
           }
@@ -89,7 +89,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
       cout << "Введите цену тура" << endl;
       cin >> price;
       for(int c =0; c<count; c++){
-        if(price == data[c].price){
+        if(price == data[c].getPrice()){
           cout << data[c];
           label = true;
           }
@@ -140,6 +140,7 @@ void Menu::addition(fstream &out, Tour *data, int *arr_size){
       count++;
       }
     count++;
+    f.clear();
     f.seekg(0, ios::beg);
     Tour *tmpData = new Tour[count];
     int i=0;

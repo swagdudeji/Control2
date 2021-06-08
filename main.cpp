@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int Menu::count = 0;
+int Menu::count = -1;
 
 int main(/*int argc, char* argv[]*/){
 
@@ -29,7 +29,7 @@ int main(/*int argc, char* argv[]*/){
   int arr_size = 1;
   Tour *data = new Tour[arr_size];
   data = menu.getFile(out, data, arr_size);
-  
+
   while(i == 1){
     cin >> id;
     if(id == 1){
