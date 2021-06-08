@@ -17,8 +17,6 @@ class Tour{
 
     friend std::ostream& operator<< (std::ostream &out, const Tour tour);
     friend std::istream& operator>> (std::istream &in, Tour &tour);
-    friend std::ostream& operator<< (std::fstream &f, const Tour tour);
-    friend std::istream& operator>> (std::fstream &f, Tour &tour);
 
     const string getName() const {return name;};
     const string getPlace() const {return place;};

@@ -1,52 +1,73 @@
 #include "class_Menu.h"
-#include <stdio.h>
 
-Tour Menu::addition(fstream &out, Tour *data, int *arr_size){
-      Tour *tmpData = new Tour[*arr_size+1];
-      cout << "CHECK: " << data[0];
-      for(int i=0; i<*arr_size-1; i++){
-        tmpData[i] = data[i];
-        cout << "CHECK: " << tmpData[i];
-        }
-      delete[] data;
-      cout << "Введите Название, Место, Дату и Стоимость тура" << endl;
-      cin >> tmpData[count];
-      data = tmpData;
-      tmpData = nullptr;
-      for(int i=0; i<=count; i++){
-        cout << "CHECK: " << data[i];
-        }
-      out.clear();
-      out.seekg(0, ios::end);
-      out << data[count];
+Tour * Menu::getFile(fstream &f, Tour *data){
+    string tmp1;
+    while (!f.eof()) {
+      getline(f, tmp1);
       count++;
-      cout << "Тур успешно добавлен" << endl;
-      return *data;
-    };
-
-    void Menu::show_all_entries(fstream &out, Tour *data){
-      for(int c =0; c<count; c++){
-        cout << data[c];
       }
+    count--;
+    f.clear();
+    f.seekg(0, ios::beg);
+    Tour *tmpData = new Tour[count];
+    int i=0;
+    while(!f.eof()){
+      f >> tmpData[i];
+      i++;
+      }
+    data = tmpData;
+    tmpData = nullptr;
+    return data;
     }
 
-    void Menu::find_tour_by_name(fstream &out, Tour *data){
-      bool label = false;
-      string name;
-      cout << "Введите название тура" << endl;
-      cin >> name;
-      for(int c =0; c<count; c++){
-        if(name == data[c].getName()){
-          cout << data[c];
-          label = true;
-        }
-      }
-      if(label == false){
-        cout << "Не существует тура с заданным именем" << endl;
+Tour * Menu::addition(Tour * data){
+  Tour * tmpData = new Tour[count+1];
+  for(int i=0; i<count; i++){
+    tmpData[i] = data[i];
+  }
+  for(int i=0; i<count; i++){
+    cout << "CHECK: " << tmpData[i];
+  }
+  delete[] data;
+  string name;
+  string place;
+  string date;
+  string price;
+  cout << "Введите Название, Место, Дату и Стоимость тура" << endl;
+  cin >> tmpData[count];
+  data = tmpData;
+  tmpData = nullptr;
+  count++;
+  for(int i=0; i<count; i++){
+    cout << "CHECK: " << data[i];
+  }
+  cout << "Тур успешно добавлен" << endl;
+  return data;
+}
+
+void Menu::show_all_entries(Tour *data){
+  for(int i=0; i<count; i++){
+    cout << "CHECK: " << data[i];
+  }
+}
+
+void Menu::find_tour_by_name(Tour *data){
+  bool label = false;
+  string name;
+  cout << "Введите название тура" << endl;
+  cin >> name;
+  for(int c =0; c<count; c++){
+    if(name == data[c].getName()){
+      cout << data[c];
+      label = true;
       }
     }
+  if(label == false){
+    cout << "Не существует тура с заданным именем" << endl;
+    }
+  }
 
-    void Menu::find_tour_by_place(fstream &out, Tour *data){
+    void Menu::find_tour_by_place(Tour *data){
       bool label = false;
       string place;
       cout << "Введите место тура" << endl;
@@ -62,7 +83,7 @@ Tour Menu::addition(fstream &out, Tour *data, int *arr_size){
       }
     }
 
-    void Menu::find_tour_by_date(fstream &out, Tour *data){
+    void Menu::find_tour_by_date(Tour *data){
       bool label = false;
       string date;
       cout << "Введите дату тура" << endl;
@@ -83,7 +104,7 @@ Tour Menu::addition(fstream &out, Tour *data, int *arr_size){
       }
     }
 
-    void Menu::find_tour_by_price(fstream &out, Tour *data){
+    void Menu::find_tour_by_price(Tour *data){
       bool label = false;
       string price;
       cout << "Введите цену тура" << endl;
@@ -99,57 +120,33 @@ Tour Menu::addition(fstream &out, Tour *data, int *arr_size){
         }
     }
 
-    void Menu::removal(fstream &out, string link, Tour *data, int *arr_size){
-      int num;
-      char tmp;
-      cout << "Введите номер удаляемого тура" << endl;
-      cin >> num;
-      count--;
-      int stopCounter;
-      Tour *tmpData = new Tour[*arr_size-1];
-        for(int i=0; i<*arr_size-1; i++){
-          if(num != i+1){
-            tmpData[i] = data[i];
-            }
-          else{
-            stopCounter = i;
-            break;
-            }
-          }
-        for(int i=stopCounter; i<*arr_size-1; i++){
-          tmpData[i] = data[i+1];
-        }
-      delete[] data;
-      data = tmpData;
-      tmpData = nullptr;
-      arr_size--;
-      out.close();
-      std::ofstream ofs;
-      ofs.open(link, std::ofstream::out | std::ofstream::trunc);
-      for(int c=0; c<count; c++){
-        out << data[c];
-      }
-      ofs << endl;
-      cout << "Тур успешно удален" << endl;
-    }
+Tour * Menu::removal(Tour *data){
+  int num;
+  int stopCounter;
+  cout << "Введите номер удаляемого тура" << endl;
+  cin >> num;
+  Tour * tmpData = new Tour[count-1];
+  for(int i=0; i<num-1; i++){
+    tmpData[i] = data[i];
+  }
+  for(int i=num-1; i<count-1; i++){
+    tmpData[i] = data[i+1];
+  }
+  delete[] data;
+  data = tmpData;
+  tmpData = nullptr;
+  count--;
+  for(int i=0; i<count; i++){
+    cout << "CHECK: " << data[i];
+  }
+  cout << "Тур успешно удален" << endl;
+  return data;
+}
 
-  Tour * Menu::getFile(fstream &f, Tour *data, int &arr_size){
-    string tmp1;
-    while (!f.eof()) {
-      getline(f, tmp1);
-      count++;
-      }
-    count++;
-    f.clear();
-    f.seekg(0, ios::beg);
-    Tour *tmpData = new Tour[count];
-    int i=0;
-    while(!f.eof() && arr_size-1<count){
-      f >> tmpData[i];
-      i++;
-      arr_size++;
-      }
-    data = tmpData;
-    tmpData = nullptr;
-    return data;
-    }
+void Menu::saveChanges(std::fstream& f, string link, Tour * data){
+  f.close();
+  f.open(link, std::fstream::trunc);
+  for(int i=0; i<count; i++){
+    f << data[i];
+  }
+}
