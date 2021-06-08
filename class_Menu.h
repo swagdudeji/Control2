@@ -25,5 +25,5 @@ class Menu{
     void find_tour_by_price(Tour *data);
     Tour * removal(Tour *data);
     Tour* getFile(fstream& f, Tour* data);
-    void saveChanges(std::fstream& f, string link, Tour * data);
+    fstream & saveChanges(std::fstream& f, string link, Tour * data);
 };

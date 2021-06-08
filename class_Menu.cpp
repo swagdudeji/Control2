@@ -25,9 +25,6 @@ Tour * Menu::addition(Tour * data){
   for(int i=0; i<count; i++){
     tmpData[i] = data[i];
   }
-  for(int i=0; i<count; i++){
-    cout << "CHECK: " << tmpData[i];
-  }
   delete[] data;
   string name;
   string place;
@@ -38,16 +35,13 @@ Tour * Menu::addition(Tour * data){
   data = tmpData;
   tmpData = nullptr;
   count++;
-  for(int i=0; i<count; i++){
-    cout << "CHECK: " << data[i];
-  }
   cout << "Тур успешно добавлен" << endl;
   return data;
 }
 
 void Menu::show_all_entries(Tour *data){
   for(int i=0; i<count; i++){
-    cout << "CHECK: " << data[i];
+    cout << data[i];
   }
 }
 
@@ -136,17 +130,15 @@ Tour * Menu::removal(Tour *data){
   data = tmpData;
   tmpData = nullptr;
   count--;
-  for(int i=0; i<count; i++){
-    cout << "CHECK: " << data[i];
-  }
   cout << "Тур успешно удален" << endl;
   return data;
 }
 
-void Menu::saveChanges(std::fstream& f, string link, Tour * data){
+fstream& Menu::saveChanges(std::fstream& f, string link, Tour * data){
   f.close();
-  f.open(link, std::fstream::trunc);
+  f.open(link, std::fstream::out | std::fstream::trunc);
   for(int i=0; i<count; i++){
     f << data[i];
   }
+  return f;
 }
